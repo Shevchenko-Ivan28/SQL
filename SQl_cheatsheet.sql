@@ -41,4 +41,23 @@ DELETE FROM table_name WHERE id=1;--deleting records meeting WHERE condition, sy
 
 DROP TABLE table_name;--used to delete table completely
 
+ALTER TABLE table_name--used to add, delete or modify columns
+ADD column_name datatype;--adds a column
+
+ALTER TABLE table_name
+DROP COLUMN column_name;--delete selected column
+
+ALTER TABLE table_name
+RENAME COLUMN old_name to new_name;--renaming a column
+
 SELECT column1, column2 FROM table_name;--selecting columns from table_name, * could be used to select all columns
+WHERE column2 > 10;--condition, OR AND can be used to make multiple ones
+
+SELECT SUM(column_name) AS total FROM table_name;--outputs sum of column name and names it total, there are other aggregate functions, such as MIN(), MAX(), COUNT(), AVG()
+
+SELECT * FROM table_name
+JOIN other_table ON other_table.columnid = table_name.columnid/*makes from 2 tables 1 by joining them by foreign key, there are different types of JOIN, JOIN=INNER JOIN
+LEFT JOIN returns values like JOIN + values from left table with no pair(friom table_name)
+RIGHT JOIN returns values like JOIN + values from right table with no pair(friom other_table)
+FULL JOIN returns values like JOIN + all values from from two tables without pair, missing values will be NULL*/
+
