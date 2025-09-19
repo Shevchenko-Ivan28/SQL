@@ -50,14 +50,37 @@ DROP COLUMN column_name;--delete selected column
 ALTER TABLE table_name
 RENAME COLUMN old_name to new_name;--renaming a column
 
-SELECT column1, column2 FROM table_name;--selecting columns from table_name, * could be used to select all columns
+SELECT column1, column2 FROM table_name--selecting columns from table_name, * could be used to select all columns
 WHERE column2 > 10;--condition, OR AND can be used to make multiple ones
 
 SELECT SUM(column_name) AS total FROM table_name;--outputs sum of column name and names it total, there are other aggregate functions, such as MIN(), MAX(), COUNT(), AVG()
 
 SELECT * FROM table_name
-JOIN other_table ON other_table.columnid = table_name.columnid/*makes from 2 tables 1 by joining them by foreign key, there are different types of JOIN, JOIN=INNER JOIN
+JOIN other_table ON other_table.columnid = table_name.columnid;/*makes from 2 tables 1 by joining them by foreign key, there are different types of JOIN, JOIN=INNER JOIN
 LEFT JOIN returns values like JOIN + values from left table with no pair(friom table_name)
 RIGHT JOIN returns values like JOIN + values from right table with no pair(friom other_table)
 FULL JOIN returns values like JOIN + all values from from two tables without pair, missing values will be NULL*/
 
+SELECT column_names FROM table_name A, table_name B-- A and B are different aliases for same table
+WHERE A.column1 = B.column2;--SELF JOIN, type of join where table is joined by itself
+
+SELECT COUNT(id), name FROM table_name
+WHERE balance>500
+GROUP BY name--statement that groups rowsthat have same values in to summary rows. In this example it will group values by different names and return count of them with balance over 500. GROUP BY typically used with aggregate functions like COUNT() in this example
+
+SELECT * FROM table_name
+ORDER BY column1, column2--sorts the records in table by values in column1, ASC ascending order by default, DESC for descending. If there are simmilar values in column1, sorting will be by column2
+LIMIT 5;--limits selection to first 5 rows
+
+SELECT COUNT(id), name FROM table_name
+GROUP BY name
+HAVING COUNT(id) > 5;--HAVING is simmilar to where, but can work with aggregate functions
+
+SELECT column_name(s) FROM table_name
+JOIN other_table ON other_table.column = table_name.column
+WHERE condition
+GROUP BY column_name(s)
+HAVING condition
+ORDER BY column_name(s)
+LIMIT value;
+--syntax if i were to write a querry witha all of above
