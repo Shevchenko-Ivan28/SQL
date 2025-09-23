@@ -84,3 +84,15 @@ HAVING condition
 ORDER BY column_name(s)
 LIMIT value;
 --syntax if i were to write a querry witha all of above
+
+SELECT column_name(s) FROM table_name1
+UNION--used to combine the result of two or more SELECT statements
+SELECT column_name(s) FROM table_name2--every SELECT must have same number of columns and simillar data types in those columns
+
+SELECT column1, column2,
+CASE--case goes through conditions and returns a value when the first condition is met, simillary to case in other programing language
+    WHEN column2 > 50 THEN 'long'--if value is greater than 50 returns 'long'
+    WHEN Quantity > 25 THEN 'medium'--in this case this is simmilar to 25 < Quantity <=50, but because all values greater than 50 are already classified i can write just Quantity > 25
+    ELSE 'short'--value that returns when all condition from above are not true
+END AS QuantityText--name of new column where all values will be
+FROM OrderDetails;
