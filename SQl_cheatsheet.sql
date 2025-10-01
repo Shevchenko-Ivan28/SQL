@@ -69,12 +69,12 @@ WHERE balance>500
 GROUP BY name--statement that groups rowsthat have same values in to summary rows. In this example it will group values by different names and return count of them with balance over 500. GROUP BY typically used with aggregate functions like COUNT() in this example
 
 SELECT * FROM table_name
-ORDER BY column1, column2--sorts the records in table by values in column1, ASC ascending order by default, DESC for descending. If there are simmilar values in column1, sorting will be by column2
+ORDER BY column1, column2--sorts the records in table by values in column1, ASC ascending order by default, DESC for descending. If there are similar values in column1, sorting will be by column2
 LIMIT 5;--limits selection to first 5 rows
 
 SELECT COUNT(id), name FROM table_name
 GROUP BY name
-HAVING COUNT(id) > 5;--HAVING is simmilar to where, but can work with aggregate functions
+HAVING COUNT(id) > 5;--HAVING is similar to where, but can work with aggregate functions
 
 SELECT column_name(s) FROM table_name
 JOIN other_table ON other_table.column = table_name.column
@@ -92,7 +92,18 @@ SELECT column_name(s) FROM table_name2--every SELECT must have same number of co
 SELECT column1, column2,
 CASE--case goes through conditions and returns a value when the first condition is met, simillary to case in other programing language
     WHEN column2 > 50 THEN 'long'--if value is greater than 50 returns 'long'
-    WHEN Quantity > 25 THEN 'medium'--in this case this is simmilar to 25 < Quantity <=50, but because all values greater than 50 are already classified i can write just Quantity > 25
+    WHEN Quantity > 25 THEN 'medium'--in this case this is similar to 25 < Quantity <=50, but because all values greater than 50 are already classified i can write just Quantity > 25
     ELSE 'short'--value that returns when all condition from above are not true
 END AS QuantityText--name of new column where all values will be
 FROM OrderDetails;
+
+SELECT column1, column2, SUM(column2) OVER (PARTITION BY column1) FROM table_name;--window functions used to perform manipulation with table without grouping it up
+SELECT column1, column2, SUM(column2) FROM table_name
+GROUP BY column1;--there will be identical calculations but windows fun return original table_name+column for SUM, where same column1 records whould have same SUM
+--GROUP BY will return result where same column1 values will be grouped
+
+SELECT *,
+  ROW_NUMBER() OVER (ORDER BY column_name),--assigns unique number to each row based only by ordering of data starting from 1
+  RANK() OVER (ORDER BY column_name),--same as ROW_NUMBER, but same values wil recieve same rank, after assigning the rank to the duplicate rows, the next rank is calculated by skipping the number of ranks that correspond to the duplicated rows, so there possible gaps in rankings
+  DENSE_RANK() OVER (ORDER BY column_name)--same as RANK, but without gaps in ranking, next non duplicate rank calculated using previos rank
+FROM table_name
